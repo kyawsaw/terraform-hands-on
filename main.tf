@@ -27,3 +27,18 @@ module "iam" {
   ec2_role_name             = var.ec2_role_name
   ec2_instance_profile_name = var.instance_profile_name
 }
+
+
+module "alb" {
+  source = "./modules/loadbalancer"
+
+  alb_name           = var.alb_name
+  vpc_id             = module.vpc.vpc_id
+  public_subnet_1_id = module.vpc.public_subnet_1_id
+  public_subnet_2_id = module.vpc.public_subnet_2_id
+  target_instance_id = module.ec2.instance_id
+  project_name       = var.project_name
+  environment        = var.environment
+  domain_name        = var.domain_name
+  certificate_arn    = var.certificate_arn
+}

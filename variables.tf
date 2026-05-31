@@ -65,3 +65,17 @@ variable "ec2_role_name" {
   type        = string
   default     = ""
 }
+
+#####
+variable "domain_name" {
+  type = string
+}
+
+variable "certificate_arn" {
+  type = string
+}
+
+variable "alb_name" {
+  type    = string
+  default = ""
+}
