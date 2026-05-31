@@ -16,3 +16,10 @@ alb_name = "devops-bootcamp"
 
 domain_name     = "bootcamp.example.com"
 certificate_arn = "arn:aws:acm:ap-southeast-1:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+db_name = "bootcamp_db"
+db_engine = "mysql"
+db_engine_version = "8.4"
+db_instance_class = "db.t3.micro"
+db_user = "admin"
+db_manage_master_user_password = true
