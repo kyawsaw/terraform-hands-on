@@ -121,3 +121,36 @@ jobs:
       - name: Apply
         run: terraform apply -auto-approve tfplan
         working-directory: ${{ env.TF_WORKING_DIR }}
+
+  destroy:
+    name: Destroy
+    runs-on: ubuntu-latest
+    if: github.event.inputs.stage == 'destroy'
+    environment: develop
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      # Recreate the tfvars file so Terraform knows which variables are attached to the state
+      - name: Create terraform.tfvars
+        run: |
+          cat <<EOF > terraform.tfvars
+          ${{ secrets.TFVARS_FILE }}
+          EOF
+        working-directory: ${{ env.TF_WORKING_DIR }}
+
+      - name: Init
+        run: terraform init
+        working-directory: ${{ env.TF_WORKING_DIR }}
+
+      - name: Destroy
+        run: terraform destroy -auto-approve
+        working-directory: ${{ env.TF_WORKING_DIR }}  
