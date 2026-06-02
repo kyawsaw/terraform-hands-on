@@ -30,7 +30,7 @@ concurrency:
 jobs:
   validate:
     name: Validate
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     if: github.event.inputs.stage == 'validate'
 
     steps:
@@ -50,7 +50,7 @@ jobs:
 
   plan: 
     name: Plan 
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     # Run if explicitly selected, OR if 'apply' is selected (since apply needs a plan file)
     if: github.event.inputs.stage == 'plan' || github.event.inputs.stage == 'apply'
     environment: develop
@@ -92,7 +92,7 @@ jobs:
 
   apply:
     name: Apply 
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     needs: plan # Forces 'apply' to wait until 'plan' finishes and uploads the file
     if: github.event.inputs.stage == 'apply'
     environment: develop
