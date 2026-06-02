@@ -64,6 +64,10 @@ resource "aws_db_instance" "app-db" {
   db_subnet_group_name        = aws_db_subnet_group.private.name
   vpc_security_group_ids      = [aws_security_group.db_sg.id]
   publicly_accessible         = false
+
+  # explicitly tell AWS not to look for a KMS key
+  storage_encrypted           = false
+  
   tags = {
     Name        = var.project_name
     Environment = var.environment
